@@ -5,11 +5,9 @@ import com.lmybaby.springcloud.entities.Payment;
 import com.lmybaby.springcloud.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,9 +20,6 @@ public class PaymentController
 {
     @Resource
     private PaymentService paymentService;
-
-    @Resource
-    private DiscoveryClient discoveryClient;
 
     @Value("${server.port}")
     private String serverPort;
@@ -54,15 +49,7 @@ public class PaymentController
         }
     }
 
-    @GetMapping(value = "/payment/discovery")
-    public Object getDiscovery()
-    {
-        List<String> elementList =  this.discoveryClient.getServices();
-        elementList.forEach(e->{
-            System.out.println("element********"+e);
-        });
-        return this.discoveryClient;
-    }
+
 
     @GetMapping(value = "/payment/lb")
     public String getPaymentLB()
